@@ -1,16 +1,22 @@
 #include <Arduino.h>
+#include "receiveFrame.h"
 
-const int led = PC13;
+ReceiveFrame myFrame;
 
 void setup() 
 {
-  pinMode(led, OUTPUT);
+  myFrame.ethernetInitialization();
+
+  Serial.begin(9600);
+
 }
 
 void loop() 
 {
-  digitalWrite(led, HIGH);
-  delay(100);
-  digitalWrite(led, LOW);
-  delay(100);
+  myFrame.collectFrame();
+
+  uint8_t* firstByte = myFrame.getDriveBits();
+
+  Serial.println(myFrame.getDriveBits()[1]);
 }
+  
