@@ -50,7 +50,9 @@ public:
     uint8_t getDriveFrameSize();
     uint8_t* getDriveBits();
 
-    void showOnSerialDriveBytes();
+    void showOnSerialDriveBytes(HardwareSerial* port);
+
+    bool isConnection();
 };
 
 #endif

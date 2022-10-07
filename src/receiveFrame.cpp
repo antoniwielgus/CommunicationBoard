@@ -95,8 +95,16 @@ uint8_t* ReceiveFrame::getDriveBits()
     return driveFrame;
 }
 
-void showOnSerialDriveBytes()
+void ReceiveFrame::showOnSerialDriveBytes(HardwareSerial* port)
 {
-    Serial.println("Dziala printowanie!");
+    port->println("testt");
+}
+
+bool ReceiveFrame::isConnection()
+{
+    if (Udp.parsePacket() == receiveFrameSize)
+        return false;
+    
+    return true;
 }
 
