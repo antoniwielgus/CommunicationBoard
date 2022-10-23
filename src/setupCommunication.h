@@ -9,9 +9,12 @@
 
 #include "Tasker.h"
 #include "receiveFrame.h"
+#include "UARTSenderFrame.h"
 
 extern Tasker tasker;
 extern ReceiveFrame frame;
+extern UARTSenderFrame senderFrame;
+extern HardwareSerial Serial2;
 
 void setupCommunication();
 
