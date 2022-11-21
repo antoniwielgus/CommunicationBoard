@@ -4,6 +4,8 @@
  * @date 02.10.2022
  */
 
+//this class enable receive frame from udp
+
 #ifndef RECEIVE_FRAME
 #define RECEIVE_FRAME
 
@@ -21,7 +23,7 @@ private:
     IPAddress ip;
     uint16_t localPort;
 
-    static const uint16_t receiveFrameSize = 320;
+    static const uint16_t receiveFrameSize = 320; //size of frame to collect
     uint8_t frame[receiveFrameSize];
     
     static const uint8_t wheelsAmount = 6;
@@ -31,15 +33,16 @@ private:
     EthernetUDP Udp;
 
     void insertDriveBytesToArray();
+    void insertManipulatorBytesToArray(); //to do
+    void insertBiologyBytesToArray(); //to do
 
 public:
     void collectFrame();
 
-    void ethernetInitialization();
+    void ethernetInitialization(); //cetting ip and other necessery things
 
     void setIPAdress(IPAddress ip = IPAddress(192, 168, 1, 10));
     void setLocalPort(uint16_t localPort = 5150);
-
     void initSPI(uint8_t MISO_pin = PB4, uint8_t MOSI_pin = PB5, uint8_t SCLK_pin = PB3, uint8_t SS_pin = PA15);
     void initMacArray();
     void initEthernet();
@@ -48,11 +51,15 @@ public:
     uint16_t getLocalPort();
     uint16_t getReceiveFrameSize();
     uint8_t getDriveFrameSize();
-    uint8_t* getDriveBits();
+    uint8_t* getDriveFrame();
+    uint8_t getManipulatorFrameSize(); //to do
+    uint8_t* getManipulatorFrame(); //to do
+    uint8_t getBiologyFrameSize(); //to do
+    uint8_t* getBiologyFrame(); //to do
 
-    void showOnSerialDriveBytes(HardwareSerial* port);
+    void showOnSerialDriveBytes(HardwareSerial* serialPort);
 
-    bool isConnection();
+    bool isConnection(); //check whether this function work properly
 };
 
 #endif

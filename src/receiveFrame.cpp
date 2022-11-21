@@ -90,14 +90,20 @@ uint8_t ReceiveFrame::getDriveFrameSize()
     return driveFrameSize;
 }
 
-uint8_t* ReceiveFrame::getDriveBits()
+uint8_t* ReceiveFrame::getDriveFrame()
 {
     return driveFrame;
 }
 
-void ReceiveFrame::showOnSerialDriveBytes(HardwareSerial* port)
+void ReceiveFrame::showOnSerialDriveBytes(HardwareSerial* serialPort)
 {
-    port->println("testt");
+    for (int i = 0; i < driveFrameSize; ++i)
+    {
+        serialPort->print(driveFrame[i]);
+        serialPort->print(" ");
+    }
+
+    serialPort->println();
 }
 
 bool ReceiveFrame::isConnection()

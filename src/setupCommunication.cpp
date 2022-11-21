@@ -10,15 +10,15 @@
 const int led = PC13;
 const int RXPin = PA3;
 const int TXPin = PA2;
-const int serila2Baudrate = 9600;
-const int serialBaudrate = 9600;
+const int DriveSerialBaudrate = 115200;
+const int ComSerialBaudrate = 115200;
 
 const int maxTasksAmount = 3;
 
 Tasker tasker(maxTasksAmount);
 ReceiveFrame frame;
-UARTSenderFrame senderFrame(frame.getDriveFrameSize(), &Serial2);
 HardwareSerial Serial2(RXPin, TXPin);
+DriveSenderFrame driveSenderFrame(&Serial2);
 
 class : public IExecutable
 {
@@ -43,27 +43,21 @@ class : public IExecutable
 {
     void execute() override
     {
-        senderFrame.sendFrame(frame.getDriveBits());
-
-        for (int i = 0; i < frame.getDriveFrameSize(); i++)
-        {
-            Serial.print(frame.getDriveBits()[i]);
-            Serial.print(" ");
-        }
-
-        Serial.println();
+        driveSenderFrame.updateFrame(frame.getDriveFrame(), frame.getDriveFrameSize());
+        driveSenderFrame.sendFrame(); 
     }
 } sendDriveFrame;
 
 void setupCommunication()
 {
-    Serial.begin(serialBaudrate);
-    Serial2.begin(serila2Baudrate);
+    Serial.begin(ComSerialBaudrate);
+    Serial2.begin(DriveSerialBaudrate);
 
     pinMode(led, OUTPUT);
     frame.ethernetInitialization();
 
-    tasker.addTask_us(&receiveFrameTask, 100000);
-    tasker.addTask_us(&blinkLedTask, 100000);
-    tasker.addTask_us(&sendDriveFrame, 50000);
+    tasker.addTask_Hz(&receiveFrameTask, 100.f);
+    tasker.addTask_Hz(&blinkLedTask, 100.f);
+    tasker.addTask_Hz(&sendDriveFrame, 100.f);
 }
+
