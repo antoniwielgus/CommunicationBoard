@@ -18,16 +18,20 @@ const int maxTasksAmount = 3;
 Tasker tasker(maxTasksAmount);
 ControlPanelCommunication controlPanelCommunication;
 HardwareSerial Serial2(RXPin, TXPin);
-DriveCommunication driveCommunication(&Serial2);
+PacketComm::StreamComm<MaxBufferSize> driveCommunication(&Serial2);
 
 class : public IExecutable
 {
     void execute() override
     {
+        // receive from control panel
         controlPanelCommunication.collectFrame();
 
-        driveCommunication.updateFrame(controlPanelCommunication.getDriveFrame(), controlPanelCommunication.getDriveFrameSize());
-        driveCommunication.sendFrame();
+        // send to drive
+        if (controlPanelCommunication.isConnection())
+        {
+            driveCommunication.send(controlPanelCommunication.getDriveFrame(), controlPanelCommunication.getDriveFrameSize());
+        }
     }
 } controlPanelReceiveTask;
 

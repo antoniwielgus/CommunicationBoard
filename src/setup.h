@@ -11,12 +11,14 @@
 
 #include "Tasker.h"
 #include "ControlPanelCommunication.h"
-#include "DriveCommunication.h"
+#include <LowLevelImpl/StreamComm.h>
+
+const uint8_t MaxBufferSize = 15;
 
 extern Tasker tasker;
 extern ControlPanelCommunication controlPanelCommunication;
 extern HardwareSerial Serial2;
-extern DriveCommunication driveCommunication;
+extern PacketComm::StreamComm<MaxBufferSize> driveCommunication;
 
 void setupCommunication();
 
