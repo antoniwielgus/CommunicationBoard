@@ -11,12 +11,12 @@
 
 #include "Tasker.h"
 #include "receiveFrame.h"
-#include "DriveSenderFrame.h"
+#include "DriveCommunication.h"
 
 extern Tasker tasker;
 extern ReceiveFrame frame;
 extern HardwareSerial Serial2;
-extern DriveSenderFrame driveSenderFrame;
+extern DriveCommunication driveSenderFrame;
 
 void setupCommunication();
 

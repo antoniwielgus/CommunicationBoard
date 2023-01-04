@@ -4,13 +4,13 @@
  * @date 07.10.2022
  */
 
-#include "DriveSenderFrame.h"
+#include "DriveCommunication.h"
 
-DriveSenderFrame::DriveSenderFrame(HardwareSerial* _serial) : streamComm(_serial)
+DriveCommunication::DriveCommunication(HardwareSerial* _serial) : streamComm(_serial)
 {
 }
 
-void DriveSenderFrame::updateFrame(const uint8_t *_frame, uint8_t _frameSize)
+void DriveCommunication::updateFrame(const uint8_t *_frame, uint8_t _frameSize)
 {
     if (_frameSize != frameSize)
         return;
@@ -19,7 +19,7 @@ void DriveSenderFrame::updateFrame(const uint8_t *_frame, uint8_t _frameSize)
         frame[i] = _frame[i];
 }
 
-void DriveSenderFrame::sendFrame()
+void DriveCommunication::sendFrame()
 {
     streamComm.send(frame, frameSize);
 

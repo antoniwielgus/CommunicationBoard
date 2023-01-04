@@ -18,7 +18,7 @@
 #include <cstdint>
 
 
-class DriveSenderFrame
+class DriveCommunication
 {
 private:
     static const uint8_t MaxBufferSize = 15;
@@ -28,7 +28,7 @@ private:
     uint8_t frame[frameSize];
 
 public:
-    DriveSenderFrame(HardwareSerial* _serial);
+    DriveCommunication(HardwareSerial* _serial);
 
     void updateFrame(const uint8_t* _frame, uint8_t _frameSize);
     void sendFrame();

@@ -4,7 +4,7 @@
  * @date 04.10.2022
  */
 
-#include "setupCommunication.h"
+#include "setup.h"
 
 
 const int led = PC13;
@@ -18,7 +18,7 @@ const int maxTasksAmount = 3;
 Tasker tasker(maxTasksAmount);
 ReceiveFrame frame;
 HardwareSerial Serial2(RXPin, TXPin);
-DriveSenderFrame driveSenderFrame(&Serial2);
+DriveCommunication driveSenderFrame(&Serial2);
 
 class : public IExecutable
 {
