@@ -16,15 +16,15 @@ const int ComSerialBaudrate = 115200;
 const int maxTasksAmount = 3;
 
 Tasker tasker(maxTasksAmount);
-ReceiveFrame frame;
+ControlPanelCommunication controlPanelCommunication;
 HardwareSerial Serial2(RXPin, TXPin);
-DriveCommunication driveSenderFrame(&Serial2);
+DriveCommunication driveCommunication(&Serial2);
 
 class : public IExecutable
 {
     void execute() override
     {
-        frame.collectFrame();
+        controlPanelCommunication.collectFrame();
     }
 } receiveFrameTask;
 
@@ -32,7 +32,7 @@ class : public IExecutable
 {
     void execute() override
     {
-        if (frame.isConnection())
+        if (controlPanelCommunication.isConnection())
             digitalWrite(led, HIGH);
         else
             digitalWrite(led, LOW);
@@ -43,8 +43,8 @@ class : public IExecutable
 {
     void execute() override
     {
-        driveSenderFrame.updateFrame(frame.getDriveFrame(), frame.getDriveFrameSize());
-        driveSenderFrame.sendFrame(); 
+        driveCommunication.updateFrame(controlPanelCommunication.getDriveFrame(), controlPanelCommunication.getDriveFrameSize());
+        driveCommunication.sendFrame(); 
     }
 } sendDriveFrame;
 
@@ -54,7 +54,7 @@ void setupCommunication()
     Serial2.begin(DriveSerialBaudrate);
 
     pinMode(led, OUTPUT);
-    frame.ethernetInitialization();
+    controlPanelCommunication.ethernetInitialization();
 
     tasker.addTask_Hz(&receiveFrameTask, 100.f);
     tasker.addTask_Hz(&blinkLedTask, 100.f);

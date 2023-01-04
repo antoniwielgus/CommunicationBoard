@@ -15,7 +15,7 @@
 #include <HardwareSerial.h>
 
 
-class ReceiveFrame
+class ControlPanelCommunication
 {
 private:
     static const uint8_t macAddressArraySize = 6;

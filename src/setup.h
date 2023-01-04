@@ -10,13 +10,13 @@
 #define SETUP_COMMUNICATION
 
 #include "Tasker.h"
-#include "receiveFrame.h"
+#include "ControlPanelCommunication.h"
 #include "DriveCommunication.h"
 
 extern Tasker tasker;
-extern ReceiveFrame frame;
+extern ControlPanelCommunication controlPanelCommunication;
 extern HardwareSerial Serial2;
-extern DriveCommunication driveSenderFrame;
+extern DriveCommunication driveCommunication;
 
 void setupCommunication();
 

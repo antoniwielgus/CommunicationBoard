@@ -4,10 +4,10 @@
  * @date 02.10.2022
  */
 
-#include <receiveFrame.h>
+#include <ControlPanelCommunication.h>
 
 
-void ReceiveFrame::insertDriveBytesToArray()
+void ControlPanelCommunication::insertDriveBytesToArray()
 {
     uint16_t index = 4;
 
@@ -15,7 +15,7 @@ void ReceiveFrame::insertDriveBytesToArray()
         driveFrame[i] = frame[index++];
 }
 
-void ReceiveFrame::collectFrame()
+void ControlPanelCommunication::collectFrame()
 {
     uint16_t packetSize = Udp.parsePacket();
 
@@ -27,7 +27,7 @@ void ReceiveFrame::collectFrame()
     insertDriveBytesToArray();
 }
 
-void ReceiveFrame::ethernetInitialization()
+void ControlPanelCommunication::ethernetInitialization()
 {
     setIPAdress();
     setLocalPort();
@@ -36,17 +36,17 @@ void ReceiveFrame::ethernetInitialization()
     initEthernet();
 }
 
-void ReceiveFrame::setIPAdress(IPAddress ip)
+void ControlPanelCommunication::setIPAdress(IPAddress ip)
 {
     this->ip = ip;
 }
 
-void ReceiveFrame::setLocalPort(uint16_t localPort)
+void ControlPanelCommunication::setLocalPort(uint16_t localPort)
 {
     this->localPort = localPort;
 }
 
-void ReceiveFrame::initSPI(uint8_t MISO_pin, uint8_t MOSI_pin, uint8_t SCLK_pin, uint8_t SS_pin)
+void ControlPanelCommunication::initSPI(uint8_t MISO_pin, uint8_t MOSI_pin, uint8_t SCLK_pin, uint8_t SS_pin)
 {
     SPI.setMISO(MISO_pin);
     SPI.setMOSI(MOSI_pin);
@@ -54,7 +54,7 @@ void ReceiveFrame::initSPI(uint8_t MISO_pin, uint8_t MOSI_pin, uint8_t SCLK_pin,
     Ethernet.init(SS_pin); //set SS pin
 }
 
-void ReceiveFrame::initMacArray()
+void ControlPanelCommunication::initMacArray()
 {
     mac[0] = 0xDE;
     mac[1] = 0xAD;
@@ -64,38 +64,38 @@ void ReceiveFrame::initMacArray()
     mac[5] = 0xED;
 }
 
-void ReceiveFrame::initEthernet()
+void ControlPanelCommunication::initEthernet()
 {
     Ethernet.begin(mac, ip);
     Udp.begin(localPort);
 }
 
-IPAddress ReceiveFrame::getIPAdress()
+IPAddress ControlPanelCommunication::getIPAdress()
 {
     return ip;
 }
 
-uint16_t ReceiveFrame::getLocalPort()
+uint16_t ControlPanelCommunication::getLocalPort()
 {
     return localPort;
 }
 
-uint16_t ReceiveFrame::getReceiveFrameSize()
+uint16_t ControlPanelCommunication::getReceiveFrameSize()
 {
     return receiveFrameSize;
 }
 
-uint8_t ReceiveFrame::getDriveFrameSize()
+uint8_t ControlPanelCommunication::getDriveFrameSize()
 {
     return driveFrameSize;
 }
 
-uint8_t* ReceiveFrame::getDriveFrame()
+uint8_t* ControlPanelCommunication::getDriveFrame()
 {
     return driveFrame;
 }
 
-void ReceiveFrame::showOnSerialDriveBytes(HardwareSerial* serialPort)
+void ControlPanelCommunication::showOnSerialDriveBytes(HardwareSerial* serialPort)
 {
     for (int i = 0; i < driveFrameSize; ++i)
     {
@@ -106,7 +106,7 @@ void ReceiveFrame::showOnSerialDriveBytes(HardwareSerial* serialPort)
     serialPort->println();
 }
 
-bool ReceiveFrame::isConnection()
+bool ControlPanelCommunication::isConnection()
 {
     if (Udp.parsePacket() == receiveFrameSize)
         return false;
