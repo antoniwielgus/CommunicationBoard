@@ -22,15 +22,4 @@ void DriveCommunication::updateFrame(const uint8_t *_frame, uint8_t _frameSize)
 void DriveCommunication::sendFrame()
 {
     streamComm.send(frame, frameSize);
-
-    // if (mySerial->available() >= frameSize)
-    // {
-    // return mySerial->write(_frame, frameSize);
-
-    // return mySerial->write("kochamOleMaz");
-
-    //     return true;
-    // // }
-
-    // return false;
 }
