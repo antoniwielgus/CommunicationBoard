@@ -22,6 +22,9 @@ void ControlPanelCommunication::ethernetInitialization()
     initSPI();
     initMacArray();
     initEthernet();
+
+    // workaround of comm state true at the beginning
+    delay(CommLostTimeout_ms);
 }
 
 void ControlPanelCommunication::collectFrame()
@@ -108,6 +111,6 @@ void ControlPanelCommunication::showOnSerialDriveBytes(HardwareSerial* serialPor
 
 bool ControlPanelCommunication::isConnection()
 {
-    return ((millis() - lastReceivedFrameTime_ms) < LostCommTimeout_ms);
+    return ((millis() - lastReceivedFrameTime_ms) < CommLostTimeout_ms);
 }
 
