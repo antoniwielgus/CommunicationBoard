@@ -40,9 +40,9 @@ private:
     void insertBiologyBytesToArray(); //to do
 
 public:
-    void collectFrame();
-
     void ethernetInitialization(); //cetting ip and other necessery things
+
+    void collectFrame();
 
     void setIPAdress(IPAddress ip = IPAddress(192, 168, 1, 10));
     void setLocalPort(uint16_t localPort = 5150);

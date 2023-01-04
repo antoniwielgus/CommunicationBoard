@@ -15,6 +15,15 @@ void ControlPanelCommunication::insertDriveBytesToArray()
         driveFrame[i] = frame[index++];
 }
 
+void ControlPanelCommunication::ethernetInitialization()
+{
+    setIPAdress();
+    setLocalPort();
+    initSPI();
+    initMacArray();
+    initEthernet();
+}
+
 void ControlPanelCommunication::collectFrame()
 {
     uint16_t packetSize = Udp.parsePacket();
@@ -25,15 +34,6 @@ void ControlPanelCommunication::collectFrame()
     Udp.read(frame, packetSize);
     insertDriveBytesToArray();
     lastReceivedFrameTime_ms = millis();
-}
-
-void ControlPanelCommunication::ethernetInitialization()
-{
-    setIPAdress();
-    setLocalPort();
-    initSPI();
-    initMacArray();
-    initEthernet();
 }
 
 void ControlPanelCommunication::setIPAdress(IPAddress ip)
