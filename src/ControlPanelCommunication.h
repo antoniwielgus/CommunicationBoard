@@ -15,7 +15,7 @@
 #include <HardwareSerial.h>
 
 
-class ReceiveFrame
+class ControlPanelCommunication
 {
 private:
     static const uint8_t macAddressArraySize = 6;
@@ -32,14 +32,17 @@ private:
 
     EthernetUDP Udp;
 
+    uint32_t lastReceivedFrameTime_ms = 0;
+    static const uint32_t CommLostTimeout_ms = 2000;
+
     void insertDriveBytesToArray();
     void insertManipulatorBytesToArray(); //to do
     void insertBiologyBytesToArray(); //to do
 
 public:
-    void collectFrame();
-
     void ethernetInitialization(); //cetting ip and other necessery things
+
+    void collectFrame();
 
     void setIPAdress(IPAddress ip = IPAddress(192, 168, 1, 10));
     void setLocalPort(uint16_t localPort = 5150);

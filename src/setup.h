@@ -10,13 +10,15 @@
 #define SETUP_COMMUNICATION
 
 #include "Tasker.h"
-#include "receiveFrame.h"
-#include "DriveSenderFrame.h"
+#include "ControlPanelCommunication.h"
+#include <LowLevelImpl/StreamComm.h>
+
+const uint8_t MaxBufferSize = 15;
 
 extern Tasker tasker;
-extern ReceiveFrame frame;
+extern ControlPanelCommunication controlPanelCommunication;
 extern HardwareSerial Serial2;
-extern DriveSenderFrame driveSenderFrame;
+extern PacketComm::StreamComm<MaxBufferSize> driveCommunication;
 
 void setupCommunication();
 
