@@ -32,6 +32,9 @@ private:
 
     EthernetUDP Udp;
 
+    uint32_t lastReceivedFrameTime_ms = 0;
+    static const uint32_t LostCommTimeout_ms = 2000;
+
     void insertDriveBytesToArray();
     void insertManipulatorBytesToArray(); //to do
     void insertBiologyBytesToArray(); //to do

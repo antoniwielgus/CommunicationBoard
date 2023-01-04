@@ -32,10 +32,7 @@ class : public IExecutable
 {
     void execute() override
     {
-        if (controlPanelCommunication.isConnection())
-            digitalWrite(led, HIGH);
-        else
-            digitalWrite(led, LOW);
+        digitalWrite(led, !controlPanelCommunication.isConnection());
     }   
 } blinkLedTask;
 

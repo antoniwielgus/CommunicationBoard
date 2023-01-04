@@ -23,8 +23,8 @@ void ControlPanelCommunication::collectFrame()
         return;
 
     Udp.read(frame, packetSize);
-
     insertDriveBytesToArray();
+    lastReceivedFrameTime_ms = millis();
 }
 
 void ControlPanelCommunication::ethernetInitialization()
@@ -108,9 +108,6 @@ void ControlPanelCommunication::showOnSerialDriveBytes(HardwareSerial* serialPor
 
 bool ControlPanelCommunication::isConnection()
 {
-    if (Udp.parsePacket() == receiveFrameSize)
-        return false;
-    
-    return true;
+    return ((millis() - lastReceivedFrameTime_ms) < LostCommTimeout_ms);
 }
 
